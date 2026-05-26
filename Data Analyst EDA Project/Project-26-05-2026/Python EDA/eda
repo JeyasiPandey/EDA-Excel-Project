@@ -1,0 +1,78 @@
+import pandas as pd
+
+# Load dataset
+df = pd.read_excel("Cleaned_Data.xlsx")
+
+# Select numeric columns
+numeric_df = df.select_dtypes(include='number')
+
+# Dataset Shape
+print("DATASET SHAPE")
+print(df.shape)
+
+# Mean
+print("\nMEAN\n")
+print(numeric_df.mean().round(2))
+
+# Median
+print("\nMEDIAN\n")
+print(numeric_df.median().round(2))
+
+# Mode
+print("\nMODE\n")
+print(numeric_df.mode().round(2))
+
+# Variance
+print("\nVARIANCE\n")
+print(numeric_df.var().round(2))
+
+# Standard Deviation
+print("\nSTANDARD DEVIATION\n")
+print(numeric_df.std().round(2))
+
+# Range
+print("\nRANGE\n")
+print((numeric_df.max() - numeric_df.min()).round(2))
+
+# Skewness
+print("\nSKEWNESS\n")
+print(numeric_df.skew().round(2))
+
+# Kurtosis
+print("\nKURTOSIS\n")
+print(numeric_df.kurt().round(2))
+
+# Unique values count
+print("\nUNIQUE VALUES\n")
+print(numeric_df.nunique())
+
+# Create results DataFrame
+results = pd.DataFrame()
+
+# Measures of Central Tendency
+results["Mean"] = numeric_df.mean().round(2)
+results["Median"] = numeric_df.median().round(2)
+results["Mode"] = numeric_df.mode().iloc[0].round(2)
+
+# Measures of Dispersion
+results["Variance"] = numeric_df.var().round(2)
+results["Standard Deviation"] = numeric_df.std().round(2)
+results["Range"] = (numeric_df.max() - numeric_df.min()).round(2)
+
+# Skewness and Kurtosis
+results["Skewness"] = numeric_df.skew().round(2)
+results["Kurtosis"] = numeric_df.kurt().round(2)
+
+# Convert index into column names
+results.reset_index(inplace=True)
+results.rename(columns={"index": "Column"}, inplace=True)
+
+# Display results
+print(results.round(2))
+
+# Save results to Excel
+results.round(2).to_excel("Statistical_Analysis_Output.xlsx", index=False)
+
+print("\nStatistical analysis saved successfully!")
+
+
